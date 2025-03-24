@@ -2,7 +2,7 @@ import { connection, closeConnection } from "../config/db.js";
 import { getUser } from "../services/UserService.js";
 import bcrypt from "bcrypt";
 import { signToken } from "../config/jwt.js";
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 
 export const showLoginPage = async (req, res) => {
   res.status(200).send({ msg: "auth controller working" });
@@ -37,7 +37,11 @@ export const handleLogin = async (req, res) => {
     const token = signToken(user);
 
     res.cookie("jwt", token, {
-      maxAge: 3600000,
+      httpOnly: true,
+      signed: true,
+      maxAge: 3600000, // como é dado em ms isso da 1 hr
+      sameSite: "Strict",
+      secure: process.env.NODE_ENV === "production",
     });
 
     res.status(200).json({ msg: "autenticacao realizada com sucesso", token });

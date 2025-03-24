@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 export const checkToken = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.signedCookies.jwt;
 
   if (!token) {
     return res.status(401).json({ message: "Acesso negado. Faça login." });

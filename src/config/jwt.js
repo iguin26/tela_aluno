@@ -3,7 +3,7 @@ import "dotenv/config";
 
 export const signToken = (user) => {
   const secret = process.env.SECRET;
-  const expiration = process.env.EXPIRATION;
+  const expiration = process.env.JWT_EXPIRATION;
 
   const token = jwt.sign(
     {
